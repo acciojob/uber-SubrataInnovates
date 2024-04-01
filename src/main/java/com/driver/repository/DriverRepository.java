@@ -9,5 +9,5 @@ import com.driver.model.Driver;
 
 @Repository
 public interface DriverRepository extends JpaRepository<Driver, Integer> {
-    List<Driver> findByCabAvailable(boolean available);
+	List<Driver> findByCabCabUnavlbl(boolean cabUnavlbl);
 }
