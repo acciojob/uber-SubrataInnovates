@@ -6,7 +6,8 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import com.driver.model.Driver;
-@Repository
-public interface DriverRepository extends JpaRepository<Driver, Integer>{
 
+@Repository
+public interface DriverRepository extends JpaRepository<Driver, Integer> {
+    List<Driver> findByCabAvailable(boolean available);
 }

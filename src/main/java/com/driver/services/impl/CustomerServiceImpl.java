@@ -14,6 +14,7 @@ import com.driver.model.TripStatus;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class CustomerServiceImpl implements CustomerService {
@@ -30,30 +31,73 @@ public class CustomerServiceImpl implements CustomerService {
 	@Override
 	public void register(Customer customer) {
 		//Save the customer in database
+		customerRepository2.save(customer);
 	}
 
 	@Override
 	public void deleteCustomer(Integer customerId) {
 		// Delete customer without using deleteById function
-
+		
+		Customer customer = customerRepository2.findById(customerId).orElseThrow(()->new RuntimeException("Customer not found with id"+customerId));
+		customerRepository2.delete(customer);
 	}
 
 	@Override
 	public TripBooking bookTrip(int customerId, String fromLocation, String toLocation, int distanceInKm) throws Exception{
 		//Book the driver with lowest driverId who is free (cab available variable is Boolean.TRUE). If no driver is available, throw "No cab available!" exception
 		//Avoid using SQL query
+		List<Driver> avDrivers = driverRepository2.findByCabAvailable(true);
+		
+		if(avDrivers.isEmpty())
+		{
+			throw new Exception("No Cab is available !!");
+		}
+		Driver drivers = avDrivers.get(0);
+		for(Driver driver:avDrivers)
+		{
+			if(driver.getDriverId()<drivers.getDriverId())
+			{
+				drivers=driver;
+			}
+		}
+		
+		TripBooking tripBooking=new TripBooking();
+		tripBooking.setDistanceInKm(distanceInKm);
+		tripBooking.setDriver(drivers);
+		tripBooking.setFromLocation(fromLocation);
+		tripBooking.setToLocation(toLocation);
+		tripBooking.setStatus(TripStatus.CONFIRMED);
+	
+		Customer customer = customerRepository2.findById(customerId)
+                .orElseThrow(() -> new RuntimeException("Customer not found with id " + customerId));
+		tripBooking.setCustomer(customer);
+		
+		return tripBookingRepository2.save(tripBooking);
 
 	}
 
 	@Override
-	public void cancelTrip(Integer tripId){
+	public void cancelTrip(Integer tripId)
+	{
 		//Cancel the trip having given trip Id and update TripBooking attributes accordingly
+		
+		TripBooking tripBooking = tripBookingRepository2.findById(tripId)
+	            .orElseThrow(() -> new RuntimeException("TripBooking not found with id " + tripId));
+		
+		tripBooking.setStatus(TripStatus.CANCELED);
+		tripBookingRepository2.save(tripBooking);
+		
 
 	}
 
 	@Override
-	public void completeTrip(Integer tripId){
+	public void completeTrip(Integer tripId)
+	{
 		//Complete the trip having given trip Id and update TripBooking attributes accordingly
+		
+		TripBooking tripBooking = tripBookingRepository2.findById(tripId).get();
+		tripBooking.setStatus(TripStatus.COMPLETED);
+		tripBookingRepository2.save(tripBooking);
 
 	}
 }
