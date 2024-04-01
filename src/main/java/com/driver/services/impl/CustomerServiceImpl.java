@@ -19,27 +19,27 @@ import java.util.Optional;
 public class CustomerServiceImpl implements CustomerService {
 
     @Autowired
-    CustomerRepository customerRepository;
+    CustomerRepository customerRepository2;
 
     @Autowired
-    DriverRepository driverRepository;
+    DriverRepository driverRepository2;
 
     @Autowired
-    TripBookingRepository tripBookingRepository;
+    TripBookingRepository tripBookingRepository2;
 
     @Override
     public void register(Customer customer) {
         // Save the customer in database
-        customerRepository.save(customer);
+        customerRepository2.save(customer);
     }
 
     @Override
     public void deleteCustomer(Integer customerId) {
         // Delete customer without using deleteById function
         
-        Customer customer = customerRepository.findById(customerId)
+        Customer customer = customerRepository2.findById(customerId)
                 .orElseThrow(() -> new RuntimeException("Customer not found with id " + customerId));
-        customerRepository.delete(customer);
+        customerRepository2.delete(customer);
     }
 
     @Override
@@ -47,7 +47,7 @@ public class CustomerServiceImpl implements CustomerService {
         // Book the driver with the lowest driverId who is free (cab available variable is Boolean.TRUE).
         // If no driver is available, throw "No cab available!" exception
         
-        List<Driver> avDrivers = driverRepository.findByCabCabUnavlbl(false); // Find available drivers
+        List<Driver> avDrivers = driverRepository2.findByCabCabUnavlbl(false); // Find available drivers
         
         if(avDrivers.isEmpty())
         {
@@ -65,11 +65,11 @@ public class CustomerServiceImpl implements CustomerService {
         tripBooking.setStatus(TripStatus.CONFIRMED);
         tripBooking.calculateBill();
         
-        Customer customer = customerRepository.findById(customerId)
+        Customer customer = customerRepository2.findById(customerId)
                 .orElseThrow(() -> new RuntimeException("Customer not found with id " + customerId));
         tripBooking.setCustomer(customer);
         
-        return tripBookingRepository.save(tripBooking);
+        return tripBookingRepository2.save(tripBooking);
 
     }
 
@@ -78,11 +78,11 @@ public class CustomerServiceImpl implements CustomerService {
     {
         // Cancel the trip having given trip Id and update TripBooking attributes accordingly
         
-        TripBooking tripBooking = tripBookingRepository.findById(tripId)
+        TripBooking tripBooking = tripBookingRepository2.findById(tripId)
                 .orElseThrow(() -> new RuntimeException("TripBooking not found with id " + tripId));
         
         tripBooking.setStatus(TripStatus.CANCELED);
-        tripBookingRepository.save(tripBooking);
+        tripBookingRepository2.save(tripBooking);
     }
 
     @Override
@@ -90,10 +90,10 @@ public class CustomerServiceImpl implements CustomerService {
     {
         // Complete the trip having given trip Id and update TripBooking attributes accordingly
         
-        TripBooking tripBooking = tripBookingRepository.findById(tripId)
+        TripBooking tripBooking = tripBookingRepository2.findById(tripId)
                 .orElseThrow(() -> new RuntimeException("TripBooking not found with id " + tripId));
         tripBooking.setStatus(TripStatus.COMPLETED);
-        tripBookingRepository.save(tripBooking);
+        tripBookingRepository2.save(tripBooking);
 
     }
 }

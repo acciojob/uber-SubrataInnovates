@@ -16,10 +16,10 @@ import com.driver.repository.DriverRepository;
 public class DriverServiceImpl implements DriverService {
 
     @Autowired
-    DriverRepository driverRepository;
+    DriverRepository driverRepository3;
 
     @Autowired
-    CabRepository cabRepository;
+    CabRepository cabRepository3;
 
     @Override
     public void register(String mobile, String password){
@@ -35,7 +35,7 @@ public class DriverServiceImpl implements DriverService {
         
         driver.setCab(cab);
         
-        driverRepository.save(driver);
+        driverRepository3.save(driver);
     }
 
     @Override
@@ -43,14 +43,14 @@ public class DriverServiceImpl implements DriverService {
     {
         // Remove driver without deleteById
         
-        Optional<Driver> optionalDriver = driverRepository.findById(driverId);
+        Optional<Driver> optionalDriver = driverRepository3.findById(driverId);
 
         
         if (optionalDriver.isPresent()) 
         {
             
             Driver driver = optionalDriver.get();
-            driverRepository.delete(driver);
+            driverRepository3.delete(driver);
         } 
         else 
         {
@@ -64,14 +64,14 @@ public class DriverServiceImpl implements DriverService {
     public void updateStatus(int driverId){
         // Set the status of respective car to unavailable
         
-        Optional<Driver> findById = driverRepository.findById(driverId);
+        Optional<Driver> findById = driverRepository3.findById(driverId);
         
         if(findById.isPresent())
         {
             Driver driver = findById.get();
             Cab cab = driver.getCab();
             cab.setCabUnavlbl(true); // Setting cab availability to true
-            cabRepository.save(cab); // Save the changes to the cab
+            cabRepository3.save(cab); // Save the changes to the cab
         }
         else 
         {
