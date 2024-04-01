@@ -6,7 +6,7 @@ import javax.persistence.*;
 public class TripBooking {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer tripId;
+    private Integer tripBookingId;
 
     private String fromLocation;
     private String toLocation;
@@ -28,12 +28,12 @@ public class TripBooking {
     @JoinColumn
     private Cab cab;
 
-	public Integer getTripId() {
-		return tripId;
+	public Integer getTripBookingId() {
+		return tripBookingId;
 	}
 
-	public void setTripId(Integer tripId) {
-		this.tripId = tripId;
+	public void setTripBookingId(Integer tripBookingId) {
+		this.tripBookingId = tripBookingId;
 	}
 
 	public String getFromLocation() {
@@ -100,10 +100,10 @@ public class TripBooking {
 		this.cab = cab;
 	}
 
-	public TripBooking(Integer tripId, String fromLocation, String toLocation, int distanceInKm, int bill,
+	public TripBooking(Integer tripBookingId, String fromLocation, String toLocation, int distanceInKm, int bill,
 			TripStatus status, Customer customer, Driver driver, Cab cab) {
 		super();
-		this.tripId = tripId;
+		this.tripBookingId = tripBookingId;
 		this.fromLocation = fromLocation;
 		this.toLocation = toLocation;
 		this.distanceInKm = distanceInKm;
@@ -118,15 +118,14 @@ public class TripBooking {
 		super();
 		// TODO Auto-generated constructor stub
 	}
-	
-	public void calculateBill() {
-       
-        double perKmRate = this.driver.getCab().getPerKmRate(); 
-        this.bill = (int) (perKmRate * this.distanceInKm);
-    }
-    
-    
 
+	public void calculateBill() {
+		double perKmRate = this.driver.getCab().getPerKmRate(); 
+        this.bill = (int) (perKmRate * this.distanceInKm);
+		
+	}
+
+	
 	
 
     
