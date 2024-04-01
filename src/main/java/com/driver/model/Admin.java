@@ -76,6 +76,12 @@ public class Admin
 		this.customers = customers;
 		this.drivers = drivers;
 	}
+
+	public Admin() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+	
 	
 	
 	
