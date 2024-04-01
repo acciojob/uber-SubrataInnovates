@@ -1,118 +1,92 @@
 package com.driver.model;
 
+import javax.persistence.*;
 import java.util.List;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
-
 @Entity
-public class Cab
-{
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Integer id;
-	private String cabNumber;
-	private Integer perKmRate;
-	private boolean available;
-	
-	
-	@JoinColumn
-	@OneToOne
-	private Driver driver;
+public class Cab {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
+    private String cabNumber;
+    private Integer perKmRate;
+    private boolean available;
 
-	@JoinColumn 
-	@OneToMany
-	private List<TripBooking> tripBookings;
-	
-	@JoinColumn
-	@OneToMany
-	private List<Customer> customers;
+    @OneToMany(mappedBy = "cab", cascade = CascadeType.ALL)
+    private List<Driver> drivers;
 
-	public Integer getId() {
-		return id;
-	}
+    @OneToMany(mappedBy = "cab", cascade = CascadeType.ALL)
+    private List<TripBooking> tripBookings;
 
-	public void setId(Integer id) {
-		this.id = id;
-	}
+    @OneToMany(mappedBy = "cab", cascade = CascadeType.ALL)
+    private List<Customer> customers;
 
-	public String getCabNumber() {
-		return cabNumber;
-	}
+    public Integer getId() {
+        return id;
+    }
 
-	public void setCabNumber(String cabNumber) {
-		this.cabNumber = cabNumber;
-	}
+    public void setId(Integer id) {
+        this.id = id;
+    }
 
-	public Integer getPerKmRate() {
-		return perKmRate;
-	}
+    public String getCabNumber() {
+        return cabNumber;
+    }
 
-	public void setPerKmRate(Integer perKmRate) {
-		this.perKmRate = perKmRate;
-	}
+    public void setCabNumber(String cabNumber) {
+        this.cabNumber = cabNumber;
+    }
 
-	public boolean isAvailable() {
-		return available;
-	}
+    public Integer getPerKmRate() {
+        return perKmRate;
+    }
 
-	public void setAvailable(boolean available) {
-		this.available = available;
-	}
+    public void setPerKmRate(Integer perKmRate) {
+        this.perKmRate = perKmRate;
+    }
 
-	public Driver getDriver() {
-		return driver;
-	}
+    public boolean isAvailable() {
+        return available;
+    }
 
-	public void setDriver(Driver driver) {
-		this.driver = driver;
-	}
+    public void setAvailable(boolean available) {
+        this.available = available;
+    }
 
-	public List<TripBooking> getTripBookings() {
-		return tripBookings;
-	}
+    public List<Driver> getDrivers() {
+        return drivers;
+    }
 
-	public void setTripBookings(List<TripBooking> tripBookings) {
-		this.tripBookings = tripBookings;
-	}
+    public void setDrivers(List<Driver> drivers) {
+        this.drivers = drivers;
+    }
 
-	public List<Customer> getCustomers() {
-		return customers;
-	}
+    public List<TripBooking> getTripBookings() {
+        return tripBookings;
+    }
 
-	public void setCustomers(List<Customer> customers) {
-		this.customers = customers;
-	}
+    public void setTripBookings(List<TripBooking> tripBookings) {
+        this.tripBookings = tripBookings;
+    }
 
-	public Cab(Integer id, String cabNumber, Integer perKmRate, boolean available, Driver driver,
-			List<TripBooking> tripBookings, List<Customer> customers) {
-		super();
-		this.id = id;
-		this.cabNumber = cabNumber;
-		this.perKmRate = perKmRate;
-		this.available = available;
-		this.driver = driver;
-		this.tripBookings = tripBookings;
-		this.customers = customers;
-	}
+    public List<Customer> getCustomers() {
+        return customers;
+    }
 
-	public Cab() {
-		super();
-		// TODO Auto-generated constructor stub
-	}
+    public void setCustomers(List<Customer> customers) {
+        this.customers = customers;
+    }
 
-	
-	
-	
-	
-	
-	
-	
-	
-	
+    public Cab(Integer id, String cabNumber, Integer perKmRate, boolean available, List<Driver> drivers, List<TripBooking> tripBookings, List<Customer> customers) {
+        this.id = id;
+        this.cabNumber = cabNumber;
+        this.perKmRate = perKmRate;
+        this.available = available;
+        this.drivers = drivers;
+        this.tripBookings = tripBookings;
+        this.customers = customers;
+    }
+
+    public Cab() {
+    }
 }
