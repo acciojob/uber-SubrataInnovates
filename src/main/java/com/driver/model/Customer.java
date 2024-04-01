@@ -49,6 +49,7 @@ public class Customer {
 	}
 
 	public TripBooking getTripBooking() {
+		
 		return tripBooking;
 	}
 
