@@ -50,7 +50,7 @@ public class CustomerServiceImpl implements CustomerService {
 		
 		if(avDrivers.isEmpty())
 		{
-			throw new Exception("No Cab is available !!");
+			throw new Exception("No cab available!");
 		}
 		Driver drivers = avDrivers.get(0);
 		for(Driver driver:avDrivers)
