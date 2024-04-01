@@ -75,6 +75,12 @@ public class DriverServiceImpl implements DriverService {
         }
         else 
         {
+        	
+        	 Driver driver = findById.get();
+             Cab cab = driver.getCab();
+             cab.setCabUnavlbl(false);
+             cabRepository3.save(cab);
+        	
             throw new RuntimeException("Driver not found with id "+driverId);
         }   
 

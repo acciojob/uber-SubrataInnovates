@@ -82,6 +82,7 @@ public class CustomerServiceImpl implements CustomerService {
                 .orElseThrow(() -> new RuntimeException("TripBooking not found with id " + tripId));
         
         tripBooking.setStatus(TripStatus.CANCELED);
+        tripBooking.setBill(0);
         tripBookingRepository2.save(tripBooking);
     }
 
