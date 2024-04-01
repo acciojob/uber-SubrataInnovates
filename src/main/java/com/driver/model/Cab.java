@@ -15,7 +15,7 @@ public class Cab
 {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Integer cabId;
+	private Integer id;
 	private String cabNumber;
 	private Integer perKmRate;
 	private boolean available;
@@ -33,12 +33,12 @@ public class Cab
 	@OneToMany
 	private List<Customer> customers;
 
-	public Integer getCabId() {
-		return cabId;
+	public Integer getId() {
+		return id;
 	}
 
-	public void setCabId(Integer cabId) {
-		this.cabId = cabId;
+	public void setId(Integer id) {
+		this.id = id;
 	}
 
 	public String getCabNumber() {
@@ -89,10 +89,10 @@ public class Cab
 		this.customers = customers;
 	}
 
-	public Cab(Integer cabId, String cabNumber, Integer perKmRate, boolean available, Driver driver,
+	public Cab(Integer id, String cabNumber, Integer perKmRate, boolean available, Driver driver,
 			List<TripBooking> tripBookings, List<Customer> customers) {
 		super();
-		this.cabId = cabId;
+		this.id = id;
 		this.cabNumber = cabNumber;
 		this.perKmRate = perKmRate;
 		this.available = available;
@@ -105,6 +105,8 @@ public class Cab
 		super();
 		// TODO Auto-generated constructor stub
 	}
+
+	
 	
 	
 	
