@@ -34,7 +34,7 @@ public class CustomerController
 		TripBooking bookedTrip = customerService.bookTrip(customerId, fromLocation, toLocation, distanceInKm);
 		
 		//return new ResponseEntity<>(bookedTrip.getTripBookingId(), HttpStatus.CREATED);
-		return new ResponseEntity<>(bookedTrip.getTripId(), HttpStatus.CREATED);
+		return new ResponseEntity<>(bookedTrip.getTripBookingId(), HttpStatus.CREATED);
 	}
 
 	@DeleteMapping("/complete")
