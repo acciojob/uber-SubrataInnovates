@@ -11,9 +11,10 @@ public class Cab {
     private String cabNumber;
     private Integer perKmRate;
     private boolean available;
+    private boolean cabUnavlbl;
 
-    @OneToMany(mappedBy = "cab", cascade = CascadeType.ALL)
-    private List<Driver> drivers;
+    @OneToOne(mappedBy = "cab", cascade = CascadeType.ALL)
+    private Driver driver;
 
     @OneToMany(mappedBy = "cab", cascade = CascadeType.ALL)
     private List<TripBooking> tripBookings;
@@ -21,72 +22,89 @@ public class Cab {
     @OneToMany(mappedBy = "cab", cascade = CascadeType.ALL)
     private List<Customer> customers;
 
-    public Integer getId() {
-        return id;
-    }
+	public Integer getId() {
+		return id;
+	}
 
-    public void setId(Integer id) {
-        this.id = id;
-    }
+	public void setId(Integer id) {
+		this.id = id;
+	}
 
-    public String getCabNumber() {
-        return cabNumber;
-    }
+	public String getCabNumber() {
+		return cabNumber;
+	}
 
-    public void setCabNumber(String cabNumber) {
-        this.cabNumber = cabNumber;
-    }
+	public void setCabNumber(String cabNumber) {
+		this.cabNumber = cabNumber;
+	}
 
-    public Integer getPerKmRate() {
-        return perKmRate;
-    }
+	public Integer getPerKmRate() {
+		return perKmRate;
+	}
 
-    public void setPerKmRate(Integer perKmRate) {
-        this.perKmRate = perKmRate;
-    }
+	public void setPerKmRate(Integer perKmRate) {
+		this.perKmRate = perKmRate;
+	}
 
-    public boolean isAvailable() {
-        return available;
-    }
+	public boolean isAvailable() {
+		return available;
+	}
 
-    public void setAvailable(boolean available) {
-        this.available = available;
-    }
+	public void setAvailable(boolean available) {
+		this.available = available;
+	}
 
-    public List<Driver> getDrivers() {
-        return drivers;
-    }
+	public boolean isCabUnavlbl() {
+		return cabUnavlbl;
+	}
 
-    public void setDrivers(List<Driver> drivers) {
-        this.drivers = drivers;
-    }
+	public void setCabUnavlbl(boolean cabUnavlbl) {
+		this.cabUnavlbl = cabUnavlbl;
+	}
 
-    public List<TripBooking> getTripBookings() {
-        return tripBookings;
-    }
+	public Driver getDriver() {
+		return driver;
+	}
 
-    public void setTripBookings(List<TripBooking> tripBookings) {
-        this.tripBookings = tripBookings;
-    }
+	public void setDriver(Driver driver) {
+		this.driver = driver;
+	}
 
-    public List<Customer> getCustomers() {
-        return customers;
-    }
+	public List<TripBooking> getTripBookings() {
+		return tripBookings;
+	}
 
-    public void setCustomers(List<Customer> customers) {
-        this.customers = customers;
-    }
+	public void setTripBookings(List<TripBooking> tripBookings) {
+		this.tripBookings = tripBookings;
+	}
 
-    public Cab(Integer id, String cabNumber, Integer perKmRate, boolean available, List<Driver> drivers, List<TripBooking> tripBookings, List<Customer> customers) {
-        this.id = id;
-        this.cabNumber = cabNumber;
-        this.perKmRate = perKmRate;
-        this.available = available;
-        this.drivers = drivers;
-        this.tripBookings = tripBookings;
-        this.customers = customers;
-    }
+	public List<Customer> getCustomers() {
+		return customers;
+	}
 
-    public Cab() {
-    }
+	public void setCustomers(List<Customer> customers) {
+		this.customers = customers;
+	}
+
+	public Cab(Integer id, String cabNumber, Integer perKmRate, boolean available, boolean cabUnavlbl, Driver driver,
+			List<TripBooking> tripBookings, List<Customer> customers) {
+		
+		this.id = id;
+		this.cabNumber = cabNumber;
+		this.perKmRate = perKmRate;
+		this.available = available;
+		this.cabUnavlbl = cabUnavlbl;
+		this.driver = driver;
+		this.tripBookings = tripBookings;
+		this.customers = customers;
+	}
+
+	public Cab() {
+		
+		// TODO Auto-generated constructor stub
+	}
+    
+    
+
+    
 }
