@@ -1,10 +1,13 @@
 package com.driver.model;
 
+import java.util.List;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
 @Entity
@@ -14,12 +17,21 @@ public class Cab
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer cabId;
 	private String cabNumber;
-	private double ratePerKm;
+	private Integer perKmRate;
 	private boolean available;
+	
 	
 	@JoinColumn
 	@OneToOne
 	private Driver driver;
+
+	@JoinColumn 
+	@OneToMany
+	private List<TripBooking> tripBookings;
+	
+	@JoinColumn
+	@OneToMany
+	private List<Customer> customers;
 
 	public Integer getCabId() {
 		return cabId;
@@ -37,12 +49,12 @@ public class Cab
 		this.cabNumber = cabNumber;
 	}
 
-	public double getRatePerKm() {
-		return ratePerKm;
+	public Integer getPerKmRate() {
+		return perKmRate;
 	}
 
-	public void setRatePerKm(double ratePerKm) {
-		this.ratePerKm = ratePerKm;
+	public void setPerKmRate(Integer perKmRate) {
+		this.perKmRate = perKmRate;
 	}
 
 	public boolean isAvailable() {
@@ -61,19 +73,40 @@ public class Cab
 		this.driver = driver;
 	}
 
-	public Cab(Integer cabId, String cabNumber, double ratePerKm, boolean available, Driver driver) {
+	public List<TripBooking> getTripBookings() {
+		return tripBookings;
+	}
+
+	public void setTripBookings(List<TripBooking> tripBookings) {
+		this.tripBookings = tripBookings;
+	}
+
+	public List<Customer> getCustomers() {
+		return customers;
+	}
+
+	public void setCustomers(List<Customer> customers) {
+		this.customers = customers;
+	}
+
+	public Cab(Integer cabId, String cabNumber, Integer perKmRate, boolean available, Driver driver,
+			List<TripBooking> tripBookings, List<Customer> customers) {
 		super();
 		this.cabId = cabId;
 		this.cabNumber = cabNumber;
-		this.ratePerKm = ratePerKm;
+		this.perKmRate = perKmRate;
 		this.available = available;
 		this.driver = driver;
+		this.tripBookings = tripBookings;
+		this.customers = customers;
 	}
 
 	public Cab() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
+	
+	
 	
 	
 	

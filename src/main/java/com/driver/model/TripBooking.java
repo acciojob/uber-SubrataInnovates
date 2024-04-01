@@ -11,7 +11,7 @@ public class TripBooking {
     private String fromLocation;
     private String toLocation;
     private int distanceInKm;
-    private double totalPrice;
+    private int bill;
 
     @Enumerated(EnumType.STRING)
     private TripStatus status;
@@ -23,6 +23,10 @@ public class TripBooking {
     @ManyToOne
     @JoinColumn(name = "driver_id")
     private Driver driver;
+    
+    @ManyToOne
+    @JoinColumn
+    private Cab cab;
 
 	public Integer getTripId() {
 		return tripId;
@@ -56,12 +60,12 @@ public class TripBooking {
 		this.distanceInKm = distanceInKm;
 	}
 
-	public double getTotalPrice() {
-		return totalPrice;
+	public int getBill() {
+		return bill;
 	}
 
-	public void setTotalPrice(double totalPrice) {
-		this.totalPrice = totalPrice;
+	public void setBill(int bill) {
+		this.bill = bill;
 	}
 
 	public TripStatus getStatus() {
@@ -88,23 +92,42 @@ public class TripBooking {
 		this.driver = driver;
 	}
 
-	public TripBooking(Integer tripId, String fromLocation, String toLocation, int distanceInKm, double totalPrice,
-			TripStatus status, Customer customer, Driver driver) {
+	public Cab getCab() {
+		return cab;
+	}
+
+	public void setCab(Cab cab) {
+		this.cab = cab;
+	}
+
+	public TripBooking(Integer tripId, String fromLocation, String toLocation, int distanceInKm, int bill,
+			TripStatus status, Customer customer, Driver driver, Cab cab) {
 		super();
 		this.tripId = tripId;
 		this.fromLocation = fromLocation;
 		this.toLocation = toLocation;
 		this.distanceInKm = distanceInKm;
-		this.totalPrice = totalPrice;
+		this.bill = bill;
 		this.status = status;
 		this.customer = customer;
 		this.driver = driver;
+		this.cab = cab;
 	}
 
 	public TripBooking() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
+	
+	public void calculateBill() {
+       
+        double perKmRate = this.driver.getCab().getPerKmRate(); 
+        this.bill = (int) (perKmRate * this.distanceInKm);
+    }
+    
+    
+
+	
 
     
 }

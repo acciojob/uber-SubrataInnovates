@@ -14,6 +14,8 @@ public class Customer {
     private Integer customerId;
     
     private String name;
+    private String mobile;
+    private String password;
     
     @OneToOne
     private Cab cab;
@@ -40,6 +42,22 @@ public class Customer {
 		this.name = name;
 	}
 
+	public String getMobile() {
+		return mobile;
+	}
+
+	public void setMobile(String mobile) {
+		this.mobile = mobile;
+	}
+
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
 	public Cab getCab() {
 		return cab;
 	}
@@ -49,7 +67,6 @@ public class Customer {
 	}
 
 	public TripBooking getTripBooking() {
-		
 		return tripBooking;
 	}
 
@@ -65,10 +82,13 @@ public class Customer {
 		this.driver = driver;
 	}
 
-	public Customer(Integer customerId, String name, Cab cab, TripBooking tripBooking, Driver driver) {
+	public Customer(Integer customerId, String name, String mobile, String password, Cab cab, TripBooking tripBooking,
+			Driver driver) {
 		super();
 		this.customerId = customerId;
 		this.name = name;
+		this.mobile = mobile;
+		this.password = password;
 		this.cab = cab;
 		this.tripBooking = tripBooking;
 		this.driver = driver;
@@ -78,6 +98,8 @@ public class Customer {
 		super();
 		// TODO Auto-generated constructor stub
 	}
+
+	
     
     
 }

@@ -67,6 +67,7 @@ public class CustomerServiceImpl implements CustomerService {
 		tripBooking.setFromLocation(fromLocation);
 		tripBooking.setToLocation(toLocation);
 		tripBooking.setStatus(TripStatus.CONFIRMED);
+		tripBooking.calculateBill();
 	
 		Customer customer = customerRepository2.findById(customerId)
                 .orElseThrow(() -> new RuntimeException("Customer not found with id " + customerId));
@@ -100,4 +101,6 @@ public class CustomerServiceImpl implements CustomerService {
 		tripBookingRepository2.save(tripBooking);
 
 	}
+	
+	
 }
