@@ -9,7 +9,7 @@ public class Driver {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer driverId;
     
-    private String name;
+//    private String name;
     private String mobile;
     private String password;
     
@@ -25,13 +25,13 @@ public class Driver {
         this.driverId = driverId;
     }
 
-    public String getName() {
-        return name;
-    }
+//    public String getName() {
+//        return name;
+//    }
 
-    public void setName(String name) {
-        this.name = name;
-    }
+//    public void setName(String name) {
+//        this.name = name;
+//    }
 
     public String getMobile() {
         return mobile;
@@ -57,9 +57,9 @@ public class Driver {
         this.cab = cab;
     }
 
-    public Driver(Integer driverId, String name, String mobile, String password, Cab cab) {
+    public Driver(Integer driverId,String mobile, String password, Cab cab) {
         this.driverId = driverId;
-        this.name = name;
+       // this.name = name;
         this.mobile = mobile;
         this.password = password;
         this.cab = cab;

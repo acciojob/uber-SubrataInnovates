@@ -23,7 +23,6 @@ public class DriverServiceImpl implements DriverService {
     @Override
     public void register(String mobile, String password){
         // Save a driver in the database having given details and a cab with ratePerKm as 10 and availability as True by default.
-
         Driver driver = new Driver();
         driver.setMobile(mobile);
         driver.setPassword(password);
@@ -37,30 +36,25 @@ public class DriverServiceImpl implements DriverService {
     }
 
     @Override
-    public void removeDriver(int driverId) 
-    {
+    public void removeDriver(int driverId) {
         // Remove driver without deleteById
-        
         Optional<Driver> optionalDriver = driverRepository.findById(driverId);
-        if (optionalDriver.isPresent()) {
-            driverRepository.delete(optionalDriver.get());
-        } else {
+        if (!optionalDriver.isPresent()) {
             throw new RuntimeException("Driver not found with id " + driverId);
         }
+        driverRepository.delete(optionalDriver.get());
     }
 
     @Override
     public void updateStatus(int driverId){
         // Set the status of respective car to unavailable
-        
         Optional<Driver> optionalDriver = driverRepository.findById(driverId);
-        if (optionalDriver.isPresent()) {
-            Driver driver = optionalDriver.get();
-            Cab cab = driver.getCab();
-            cab.setCabUnavlbl(false); // Setting cab availability to false
-            cabRepository.save(cab); // Save the changes to the cab
-        } else {
+        if (!optionalDriver.isPresent()) {
             throw new RuntimeException("Driver not found with id " + driverId);
-        }   
+        }
+        Driver driver = optionalDriver.get();
+        Cab cab = driver.getCab();
+        cab.setCabUnavlbl(false); // Setting cab availability to false
+        cabRepository.save(cab); // Save the changes to the cab
     }
 }

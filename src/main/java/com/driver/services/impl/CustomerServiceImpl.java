@@ -44,11 +44,10 @@ public class CustomerServiceImpl implements CustomerService {
         }
     }
 
+ // CustomerServiceImpl.java
+
     @Override
     public TripBooking bookTrip(int customerId, String fromLocation, String toLocation, int distanceInKm) throws Exception {
-        // Book the driver with the lowest driverId who is free (cab available variable is Boolean.TRUE).
-        // If no driver is available, throw "No cab available!" exception
-
         List<Driver> availableDrivers = driverRepository.findByCabCabUnavlbl(false); // Find available drivers
 
         if (availableDrivers.isEmpty()) {
@@ -67,14 +66,14 @@ public class CustomerServiceImpl implements CustomerService {
         tripBooking.calculateBill();
 
         Optional<Customer> optionalCustomer = customerRepository.findById(customerId);
-        if (optionalCustomer.isPresent()) {
-            tripBooking.setCustomer(optionalCustomer.get());
-        } else {
+        if (!optionalCustomer.isPresent()) {
             throw new RuntimeException("Customer not found with id " + customerId);
         }
+        tripBooking.setCustomer(optionalCustomer.get());
 
         return tripBookingRepository.save(tripBooking);
     }
+
 
     @Override
     public void cancelTrip(Integer tripId) {
