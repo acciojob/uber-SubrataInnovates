@@ -31,7 +31,6 @@ public class DriverServiceImpl implements DriverService {
         Cab cab = new Cab();
         cab.setPerKmRate(10);
         cab.setCabUnavlbl(true); // Newly registered drivers have their cabs available by default
-        
         driver.setCab(cab);
         
         driverRepository.save(driver);
@@ -43,14 +42,9 @@ public class DriverServiceImpl implements DriverService {
         // Remove driver without deleteById
         
         Optional<Driver> optionalDriver = driverRepository.findById(driverId);
-
-        if (optionalDriver.isPresent()) 
-        {
-            Driver driver = optionalDriver.get();
-            driverRepository.delete(driver);
-        } 
-        else 
-        {
+        if (optionalDriver.isPresent()) {
+            driverRepository.delete(optionalDriver.get());
+        } else {
             throw new RuntimeException("Driver not found with id " + driverId);
         }
     }
@@ -59,18 +53,14 @@ public class DriverServiceImpl implements DriverService {
     public void updateStatus(int driverId){
         // Set the status of respective car to unavailable
         
-        Optional<Driver> findById = driverRepository.findById(driverId);
-        
-        if(findById.isPresent())
-        {
-            Driver driver = findById.get();
+        Optional<Driver> optionalDriver = driverRepository.findById(driverId);
+        if (optionalDriver.isPresent()) {
+            Driver driver = optionalDriver.get();
             Cab cab = driver.getCab();
             cab.setCabUnavlbl(false); // Setting cab availability to false
             cabRepository.save(cab); // Save the changes to the cab
-        }
-        else 
-        {
-            throw new RuntimeException("Driver not found with id "+driverId);
+        } else {
+            throw new RuntimeException("Driver not found with id " + driverId);
         }   
     }
 }

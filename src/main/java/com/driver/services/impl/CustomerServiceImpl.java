@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class CustomerServiceImpl implements CustomerService {
@@ -35,9 +36,12 @@ public class CustomerServiceImpl implements CustomerService {
     @Override
     public void deleteCustomer(Integer customerId) {
         // Delete customer without using deleteById function
-        Customer customer = customerRepository.findById(customerId)
-                .orElseThrow(() -> new RuntimeException("Customer not found with id " + customerId));
-        customerRepository.delete(customer);
+        Optional<Customer> optionalCustomer = customerRepository.findById(customerId);
+        if (optionalCustomer.isPresent()) {
+            customerRepository.delete(optionalCustomer.get());
+        } else {
+            throw new RuntimeException("Customer not found with id " + customerId);
+        }
     }
 
     @Override
@@ -62,9 +66,12 @@ public class CustomerServiceImpl implements CustomerService {
         tripBooking.setStatus(TripStatus.CONFIRMED);
         tripBooking.calculateBill();
 
-        Customer customer = customerRepository.findById(customerId)
-                .orElseThrow(() -> new RuntimeException("Customer not found with id " + customerId));
-        tripBooking.setCustomer(customer);
+        Optional<Customer> optionalCustomer = customerRepository.findById(customerId);
+        if (optionalCustomer.isPresent()) {
+            tripBooking.setCustomer(optionalCustomer.get());
+        } else {
+            throw new RuntimeException("Customer not found with id " + customerId);
+        }
 
         return tripBookingRepository.save(tripBooking);
     }
@@ -72,19 +79,27 @@ public class CustomerServiceImpl implements CustomerService {
     @Override
     public void cancelTrip(Integer tripId) {
         // Cancel the trip having given trip Id and update TripBooking attributes accordingly
-        TripBooking tripBooking = tripBookingRepository.findById(tripId)
-                .orElseThrow(() -> new RuntimeException("TripBooking not found with id " + tripId));
-        tripBooking.setStatus(TripStatus.CANCELED);
-        tripBooking.setBill(0);
-        tripBookingRepository.save(tripBooking);
+        Optional<TripBooking> optionalTripBooking = tripBookingRepository.findById(tripId);
+        if (optionalTripBooking.isPresent()) {
+            TripBooking tripBooking = optionalTripBooking.get();
+            tripBooking.setStatus(TripStatus.CANCELED);
+            tripBooking.setBill(0);
+            tripBookingRepository.save(tripBooking);
+        } else {
+            throw new RuntimeException("TripBooking not found with id " + tripId);
+        }
     }
 
     @Override
     public void completeTrip(Integer tripId) {
         // Complete the trip having given trip Id and update TripBooking attributes accordingly
-        TripBooking tripBooking = tripBookingRepository.findById(tripId)
-                .orElseThrow(() -> new RuntimeException("TripBooking not found with id " + tripId));
-        tripBooking.setStatus(TripStatus.COMPLETED);
-        tripBookingRepository.save(tripBooking);
+        Optional<TripBooking> optionalTripBooking = tripBookingRepository.findById(tripId);
+        if (optionalTripBooking.isPresent()) {
+            TripBooking tripBooking = optionalTripBooking.get();
+            tripBooking.setStatus(TripStatus.COMPLETED);
+            tripBookingRepository.save(tripBooking);
+        } else {
+            throw new RuntimeException("TripBooking not found with id " + tripId);
+        }
     }
 }
